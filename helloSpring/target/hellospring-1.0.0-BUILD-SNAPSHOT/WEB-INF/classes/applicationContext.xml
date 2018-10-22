@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="tv" class="polymorphism.coupling.LgTV"/><!-- class의 값만 바꿔주면 내가원하는 값들을 내올수 있음. 모든 bean을 등록후 id를 부여함 -->
+	<!-- 여기가 스프링 컨테이너 부분 -->
+</beans>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+		<context:component-scan base-package="polymorphism com.company"></context:component-scan>
+		
+		<!-- 컨테이너는 기준이 애매한거는 못찾음. 그렇게 똑똑하진 않은듯. -->
+		
+		
+<!-- 	<bean id="speaker" class="polymorphism.coupling.AppleSpeaker"/>
+	<bean id="tv" class="polymorphism.coupling.SamsungTV"
+	init-method="initMethod" destroy-method="destoryMethod"
+	scope="singleton" 
+	lazy-init="true"> -->
+	<!-- p:speaker-ref="speaker" p:price="3000" -->
+	<!-- <constructor-arg name="speaker" ref="speaker"/> --> <!-- constructor 생성자 -->
+	<!-- <constructor-arg name="price" value="2000"/> -->
+	<!-- <property name="speaker" ref="speaker"/> --> <!--name은 samsungTV에 있는 필드 명을 적어주면됨. property는 set메소드를 호출함. 프로퍼티 많이씀  -->
+<!-- 	<property name="price" value="2000"/> --><!--참조형변수면 ref로 초기화 기본형변수이면 value로 초기화함.  -->
+<!-- 	<property name="program"> -->	<!-- 리스트  -->
+		<!-- <list> -->					<!-- 초기값을 정함 -->
+<!-- 			<value>유재석</value>
+			<value>박명수</value>
+			<value>정준하</value>
+			<value>노홍철</value>
+		</list>
+	</property> -->
+	<!-- </bean> -->
+	<!-- class의 값만 바꿔주면 내가원하는 값들을 내올수 있음. 모든 bean을 등록후 id를 부여함 -->
+	<!-- 여기가 스프링 컨테이너 부분 --> <!-- scope는 기본값이 싱글톤임 -->
+</beans>
