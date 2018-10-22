@@ -22,10 +22,22 @@ public class UserController {
 		model.addAttribute("user",userService.getUser(dto)); 
 		return "user/updateUser";
 	}
-	
+	//수정처리
 	@RequestMapping("/updateUser.do")//URL요청
 	public String updateUser(Model model, UserDTO dto) {
 		model.addAttribute("user",userService.updateUser(dto)); 
+		return "redirect:/getUsers.do";
+	}
+	//등록폼
+	@RequestMapping("/insertUserForm.do")
+	public String insertUserFrom() {
+		return "user/insertUser";
+	}
+	
+	//등록처지
+	@RequestMapping("/insertUser.do")//URL요청
+	public String insertUser(Model model, UserDTO dto) {
+		model.addAttribute("user",userService.insertUser(dto)); 
 		return "redirect:/getUsers.do";
 	}
 	

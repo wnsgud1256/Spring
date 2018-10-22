@@ -26,7 +26,6 @@ public class UserDAOSpring {
 	public int insertUser(UserDTO dto) {
 		Object[] arr= {dto.getId(),dto.getPassword(),
 			dto.getName(),dto.getRole()}; // 오브젝트 배열로 할수도 있음
-		
 		return jdbcTemplate.update(USER_INSERT, arr);
 				/*dto.getId(),dto.getPassword(),
 				dto.getName(),dto.getRole()); //이 방법도 있음.*/

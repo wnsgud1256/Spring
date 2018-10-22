@@ -8,7 +8,7 @@
 <title>user/getUsers.jsp</title>
 </head>
 <body>
-
+<a href="insertUserForm.do">회원등록</a>
 <table border="1" style="width:500px">
 <tr><td>아디</td><td>이름</td><td>패스위드</td><td>롤</td></tr>
 <c:forEach items="${list}" var="user">

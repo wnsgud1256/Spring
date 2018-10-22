@@ -14,13 +14,15 @@ public class UserServiceImp1 implements UserService {
 
 	// LogAdvice logAdvice = new LogAdvice();
 	// DI
-	@Autowired UserDAOSpring dao;
-	
+	//@Autowired UserDAOSpring dao;
+	@Autowired UserDAOmybatis dao;
 	@Override
 	public int insertUser(UserDTO dto) {
 		// TODO Auto-generated method stub
 		System.out.println("값 삽입");
-		return dao.insertUser(dto);
+		/*dao.insertUser(dto);*/		//일부러 에러 2번 나도록 조작함.
+		return dao.insertUser(dto); //이렇게 하면 한건은 들어가지만 유니크 에러가 걸림  트랜잭션 처리가 되어있으면 자동으로 롤백이됨. 
+									//하지만 처리가 되어 있지 않으면 한건은 에러가 나지만 처음 입력된 한건은 삽입이 됨
 	}
 
 	@Override
