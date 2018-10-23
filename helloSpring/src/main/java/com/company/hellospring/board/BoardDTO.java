@@ -8,6 +8,16 @@ public class BoardDTO {
 	private String content;
 	private String regdate;
 	private String cnt;
+	private String outmsg;
+	
+	
+	
+	public String getOutmsg() {
+		return outmsg;
+	}
+	public void setOutmsg(String outmsg) {
+		this.outmsg = outmsg;
+	}
 	public String getSeq() {
 		return seq;
 	}
@@ -47,7 +57,7 @@ public class BoardDTO {
 	@Override
 	public String toString() {
 		return "BoardDTO [seq=" + seq + ", title=" + title + ", writer=" + writer + ", content=" + content
-				+ ", regdate=" + regdate + ", cnt=" + cnt + "]";
+				+ ", regdate=" + regdate + ", cnt=" + cnt + ", outmsg=" + outmsg + "]";
 	}
-	
+
 }

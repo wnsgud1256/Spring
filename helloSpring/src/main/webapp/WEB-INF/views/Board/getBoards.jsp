@@ -8,11 +8,11 @@
 <title></title>
 </head>
 <body>
-
+${list}
 <table border="1" style="width:500px">
 <tr><td>번호</td><td>TITLE</td><td>글쓴이</td><td>내용</td><td>올린날짜</td><td>조회수</td></tr>
 <c:forEach items="${list}" var="board">
-<tr><td>${board.seq}</td><td>${board.title}</td><td>${board.writer}</td><td>${board.content}</td><td>${board.regdate}</td><td>${board.cnt}</td></tr>;
+<tr><td>${board.seq}</td><td>${board.title}</td><td>${board.writer}</td><td>${board.content}</td><td>${board.regdate}</td><td>${board.cnt}</td></tr>
 </c:forEach>
 
 </table>

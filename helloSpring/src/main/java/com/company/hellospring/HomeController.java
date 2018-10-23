@@ -26,7 +26,7 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
-	@Autowired TV  tv; //객체생성해 달라는 요청 root context에 요청을 보넴
+	/*@Autowired TV  tv;*/ //객체생성해 달라는 요청 root context에 요청을 보넴
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -34,7 +34,7 @@ public class HomeController {
 	public String home(Locale locale, Model model) { // 이 메소드가 실행됨
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
-		tv.powerOn();
+	/*	tv.powerOn();*/
 		
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);

@@ -6,5 +6,5 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
 	<!-- 여기가 스프링 컨테이너 부분 -->
 	<!-- Root Context: defines shared resources visible to all other web components -->
-	<bean id="tv" class="polymorphism.coupling.LgTV"></bean>
+	<!-- <bean id="tv" class="polymorphism.coupling.LgTV"></bean> -->
 </beans>

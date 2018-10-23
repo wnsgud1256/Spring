@@ -69,7 +69,7 @@
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
 			<version>1.2.15</version>
-			<exclusions>
+			<exclusions>							<!-- 설치하지 말라고 예외 사항을 명시하는 곳 -->
 				<exclusion>
 					<groupId>javax.mail</groupId>
 					<artifactId>mail</artifactId>
@@ -164,6 +164,12 @@
 			<version>3.3.1</version>
 		</dependency>
 
+	<!-- log jdbc -->
+	<dependency>
+	<groupId>org.lazyluke</groupId>
+	<artifactId>log4jdbc-remix</artifactId>
+	<version>0.2.7</version>
+	</dependency>
 
 	</dependencies>
 	<build>

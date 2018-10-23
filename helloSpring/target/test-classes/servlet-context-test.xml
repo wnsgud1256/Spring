@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing 
+		infrastructure -->
+
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />
+
+	<context:component-scan base-package="com.company.hellospring" /> <!-- 모든 클래스를 스캔해서 bean 등록을함 -->
+	<!-- 자동으로 aop 어노테이션 관련것을 설정 해줌 -->
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	
+	<!-- datasource 설정 -->
+	<beans:bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"> <!-- 클래스에 따라 속성이 달라짐 -->
+		<beans:property name="driverClassName" value="oracle.jdbc.OracleDriver"></beans:property> <!-- maxActive:커넥션 허용량 디폴트 8-->
+		<beans:property name="url" value="jdbc:oracle:thin:@localhost:1521:XE"></beans:property>
+		<beans:property name="username" value="spring"></beans:property>
+		<beans:property name="password" value="spring"></beans:property>
+	</beans:bean>	
+		
+	<!-- 템플릿 설정 추가 / spring jdbc설정 -->
+	<beans:bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<beans:property name="dataSource" ref="dataSource"/> <!-- property : jdbcTemplat가 필요로 하는 필드 -->
+	</beans:bean>
+	
+	<beans:bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"> <!-- 클래스를 처리 해줄 빈 -->
+		<beans:property name="dataSource" ref="dataSource"/>
+	</beans:bean>
+	
+
+	<!-- Mabatis -->
+	
+	<beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="configLocation" value="classpath:sql-map-config-spring.xml" />
+		<beans:property name="mapperLocations" value="classpath:/mapper/*.xml" />
+	</beans:bean>
+	
+	<beans:bean class="org.mybatis.spring.SqlSessionTemplate">
+		<beans:constructor-arg ref="sqlSession"></beans:constructor-arg>
+	</beans:bean>
+
+	
+	
+	
+	
+	<!-- 트랜잭션 매니저 -->
+	<tx:advice id="txAdvice" transaction-manager="txManager"> 
+		<tx:attributes>
+			<tx:method name="get*" read-only="true"/>
+			<tx:method name="*"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+		<aop:pointcut
+			expression="execution(* com.company..*Imp1.*(..))" id="allpointcut" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="allpointcut"/>
+	</aop:config> 
+	
+	
+<!-- 	<beans:bean id="log"
+		class="com.company.hellospring.common.LogAdvice" />
+	<beans:bean id="log4j"
+		class="com.company.hellospring.common.Log4jAdvice" /> -->
+		
+	<!-- <beans:bean id="before" class="com.company.hellospring.common.BeforeAdvice"/>
+	<beans:bean id="afterreturn" class="com.company.hellospring.common.AfterReturningAdvice"/>	
+		<beans:bean id="afterthrow" class="com.company.hellospring.common.AfterThrowingAdvice"/>	
+	<beans:bean id="after" class="com.company.hellospring.common.AfterAdvice"/>
+	<beans:bean id="around" class="com.company.hellospring.common.AroundAdvice"/> -->
+		
+<!-- 	<aop:config>
+		<aop:pointcut
+			expression="execution(* com.company..*Imp1.*(..))" id="allpointcut" />
+			어드바이스를 적용할 서비스 메소드를 정의하는곳. ..이 인수 개수나 타입상관없이 모든것을 서비스함
+			
+	<aop:aspect ref="after"> 실행할 메소드 지정.
+		<aop:after-returning method="finalyLog" pointcut-ref="allpointcut"/>
+	</aop:aspect>
+			
+	<aop:aspect ref="afterthrow">
+		<aop:after-throwing method="exceptionLog" pointcut-ref="allpointcut"/>
+	</aop:aspect>
+	
+	<aop:aspect ref="afterreturn">
+		<aop:after-returning method="afterLog" pointcut-ref="allpointcut"
+		returning="returnObj"/>
+	</aop:aspect>
+	
+	<aop:aspect ref="before">
+		<aop:before method="beforeLog" pointcut-ref="allpointcut"/>
+	</aop:aspect>
+	
+	<aop:aspect ref="around">
+		<aop:around method="aroundLog" pointcut-ref="allpointcut"/>
+	</aop:aspect>
+				
+	</aop:config> -->
+
+</beans:beans>
