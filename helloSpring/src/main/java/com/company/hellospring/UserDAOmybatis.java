@@ -11,11 +11,16 @@ public class UserDAOmybatis {
 	@Autowired 
 	SqlSessionTemplate mybatis;
 	//전체조회
-	public List<UserDTO> getUsers(){
+	public List<UserDTO> getUsers(UserSearchDTO dto){
 		System.out.println("user mybatis 목록 조회==========");
-		 return mybatis.selectList("user.getUsers");
+		 return mybatis.selectList("user.getUsers",dto);
 	}
-
+	
+	//건수 조회
+	public int getCnt(UserSearchDTO searchDto) {			 //userMapper
+		return mybatis.selectOne("user.getCnt",searchDto);
+	}
+	
 	//단건조회
 	public UserDTO getUser(UserDTO dto) {
 		System.out.println("mybations 사용자 삭제");

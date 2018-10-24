@@ -2,35 +2,74 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="user">
-<!-- 전체 조회 -->
-<select id="getUsers" resultType="user">
-	SELECT * FROM USERS ORDER BY ID
-</select>
+	<!-- 전체 조회 -->
+	<select id="getUsers" resultType="user">
+	select *from (select u.*, rownum rn from(
+		SELECT * FROM USERS 
+		<where>
+			<if test="ids != null"> <!-- ids값을 사용하기위해 씀 -->
+			id in
+			<foreach collection="ids" open="(" close=")" separator="," item="item"> <!-- item안에는 root변수가 들어감 -->
+				#{item}
+			</foreach>
+			</if>
+			<if test="searchCondition == 'id'">
+				and id like '%' || #{searchKeyword} || '%'
+			</if>
+			<if test="searchCondition == 'name'">
+				and name like '%' || #{searchKeyword} || '%'
+			</if>
+		</where>
+		ORDER BY ID                      
+    ) u     )a where rn between #{start} and #{end}
+	</select>
+	
+	<!-- 건수조회 -->
+	<select id="getCnt" resultType="int" parameterType="user">
+	select count(*)		
+	from users
+	
+	<where>
+			<if test="ids != null"> <!-- ids값을 사용하기위해 씀 -->
+			id in
+			<foreach collection="ids" open="(" close=")" separator="," item="item"> <!-- item안에는 root변수가 들어감 -->
+				#{item}
+			</foreach>
+			</if>
+			<if test="searchCondition == 'id'">
+				and id like '%' || #{searchKeyword} || '%'
+			</if>
+			<if test="searchCondition == 'name'">
+				and name like '%' || #{searchKeyword} || '%'
+			</if>
+		</where>
+	
+	</select>
 
-<!-- 단건조회 -->
-<select id="getUser" parameterType="user" resultType="int">
-	SELECT * FROM USERS WHERE ID = #{id}
-</select>
+	<!-- 단건조회 -->
+	<select id="getUser" parameterType="user" resultType="user">
+		SELECT * FROM USERS WHERE ID = #{id}
+	</select>
 
 
-<!-- 등록 -->
-<insert id="insertUser" parameterType="user"> <!-- parameterType 생략 가능 -->
-	insert into users (id, password, name, role)
-	value ( #{id}, #{password}, #{name}, #{role} ) <!-- 메서도 호출함 -->
-</insert>
+	<!-- 등록 -->
+	<insert id="insertUser" parameterType="user"> <!-- parameterType 생략 가능 -->
+		insert into users (id, password, name, role)
+		value ( #{id}, #{password}, #{name}, #{role} ) <!-- 메서도 호출함 -->
+	</insert>
 
-<!-- 수정-->
-<update id="updateUser" parameterType="user">
-update users set 
-password = #{password},
- name = #{name}, 
-role = #{role} 
-where id = #[id}
-</update>
+	<!-- 수정 -->
+	<update id="updateUser" parameterType="user">
+		update users set
+		password = #{password},
+		name = #{name},
+		role = #{role}
+		where id = #[id}
+	</update>
 
-<!-- 삭제 -->
-<delete id="deleteUser" parameterType="user">
-delete from users
-where id = #{id}
-</delete>
+	<!-- 삭제 -->
+	<delete id="deleteUser" parameterType="user">
+		delete from users
+		where id = #{id}
+	</delete>
 </mapper>

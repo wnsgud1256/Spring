@@ -32,12 +32,12 @@ public class UserServiceImp1 implements UserService {
 	}
 
 	@Override
-	public List<UserDTO> getUsers() {
+	public List<UserDTO> getUsers(UserSearchDTO searchDto) {
 		
 		// TODO Auto-generated method stub
 		// logAdvice.pringLog(); //횡단관심
 		System.out.println("사용자 목록 조회");
-		return dao.getUsers(); // 핵심관심
+		return dao.getUsers(searchDto); // 핵심관심
 	}
 
 	@Override
@@ -52,6 +52,12 @@ public class UserServiceImp1 implements UserService {
 		// TODO Auto-generated method stub
 		System.out.println("삭제");
 		return dao.deleteUser(dto);// dao.deleteUser();
+	}
+
+	@Override
+	public int getCnt(UserSearchDTO searchDto) {
+		// TODO Auto-generated method stub
+		return dao.getCnt(searchDto);
 	}
 
 }

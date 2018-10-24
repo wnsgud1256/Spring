@@ -10,7 +10,7 @@ public class BoardController {
 	@Autowired
 	BoardService boardservice;
 	
-	@RequestMapping("/getBoards.do")
+	@RequestMapping("/getBoards.do") //리퀘스트 맵핑 덕에 자동으로 맵핑 정보가 관리됨
 	public String getBoards(Model model) {
 		model.addAttribute("list",boardservice.getboards());
 		return "Board/getBoards";

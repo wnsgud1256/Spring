@@ -8,14 +8,19 @@
 		SEQ
 	</select>
 
-	<insert id="insertBoardProc" statementType="CALLABLE" parameterType="board"> <!-- statementType중요, 프로시저 호출-->
+	<insert id="insertBoardProc" statementType="CALLABLE"
+		parameterType="board"> <!-- statementType중요, 프로시저 호출 -->
 		{ call BOARD_INS_PROC(
 		#{title},
 		#{writer},
-		#{content,mode=IN, jdbcType=VARCHAR, javaType=string},
-		#{seq, mode=OUT,jdbcType=NUMERIC, javaType=string},
-		#{outmsg, mode=OUT, jdbcType=VARCHAR, javaType=string}   )
+		#{content,mode=IN,
+		jdbcType=VARCHAR, javaType=string},
+		#{seq, mode=OUT,jdbcType=NUMERIC,
+		javaType=string},
+		#{outmsg, mode=OUT, jdbcType=VARCHAR,
+		javaType=string} )
 		}
-	</insert> <!-- javaType은 DTO의 타입이랑 맞아야함  jdbcType=VARCHAR, javaType=string는 둘다 같은 타입 이라 생략이 가능함.-->
+	</insert> <!-- javaType은 DTO의 타입이랑 맞아야함 jdbcType=VARCHAR, javaType=string는 둘다 같은 타입 
+		이라 생략이 가능함. -->
 
 </mapper>

@@ -17,6 +17,8 @@ public interface UserService { // 서비스가 교체될 수도 있기 때문에
 	public UserDTO getUser(UserDTO dto);
 
 	// 전체조회(list)
-	public List<UserDTO> getUsers();
+	public List<UserDTO> getUsers(UserSearchDTO searchDto);
+	//건수조회
+	public int getCnt(UserSearchDTO searchDto);
 
 }

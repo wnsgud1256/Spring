@@ -6,13 +6,16 @@
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 	</settings>
-	
-		
+
+
 	<!-- Alias 설정 -->
-	
- 	 <typeAliases>
- 	<typeAlias type="com.company.hellospring.board.BoardDTO" alias="board"/>
- 	<typeAlias type="com.company.hellospring.UserDTO" alias="user"/>
- 	</typeAliases>
-	
+
+	<typeAliases>
+		<typeAlias type="com.company.hellospring.board.BoardDTO"
+			alias="board" />
+		<typeAlias type="com.company.hellospring.UserDTO"
+			alias="user" />
+		<typeAlias type="com.company.hellospring.UserSearchDTO" alias="UserSearchDTO"/>
+	</typeAliases>
+
 </configuration>
