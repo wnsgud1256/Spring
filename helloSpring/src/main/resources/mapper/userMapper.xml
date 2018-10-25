@@ -4,14 +4,15 @@
 <mapper namespace="user">
 	<!-- 전체 조회 -->
 	<select id="getUsers" resultType="user">
-	select *from (select u.*, rownum rn from(
-		SELECT * FROM USERS 
+		select *from (select u.*, rownum rn from(
+		SELECT * FROM USERS
 		<where>
 			<if test="ids != null"> <!-- ids값을 사용하기위해 씀 -->
-			id in
-			<foreach collection="ids" open="(" close=")" separator="," item="item"> <!-- item안에는 root변수가 들어감 -->
-				#{item}
-			</foreach>
+				id in
+				<foreach collection="ids" open="(" close=")" separator=","
+					item="item"> <!-- item안에는 root변수가 들어감 -->
+					#{item}
+				</foreach>
 			</if>
 			<if test="searchCondition == 'id'">
 				and id like '%' || #{searchKeyword} || '%'
@@ -19,22 +20,35 @@
 			<if test="searchCondition == 'name'">
 				and name like '%' || #{searchKeyword} || '%'
 			</if>
+			<if test="role != null and role != ''">
+				and role = #{role} 
+			</if>	<!-- #을 하면 타입과 값을 맞춰줌 -->
 		</where>
-		ORDER BY ID                      
-    ) u     )a where rn between #{start} and #{end}
+		sort = 'id'
+		ORDER BY
+		<choose>
+			<when test="sort != null and sort != '' ">
+			${sort} 
+			</when><!-- ${}데이터 타입 없이 무조건 값만 들어감 -->
+			<otherwise>
+				ID
+			</otherwise>
+		</choose>
+		) u )a where rn between #{start} and #{end}	
 	</select>
-	
+
 	<!-- 건수조회 -->
 	<select id="getCnt" resultType="int" parameterType="user">
-	select count(*)		
-	from users
-	
-	<where>
+		select count(*)
+		from users
+
+		<where>
 			<if test="ids != null"> <!-- ids값을 사용하기위해 씀 -->
-			id in
-			<foreach collection="ids" open="(" close=")" separator="," item="item"> <!-- item안에는 root변수가 들어감 -->
-				#{item}
-			</foreach>
+				id in
+				<foreach collection="ids" open="(" close=")" separator=","
+					item="item"> <!-- item안에는 root변수가 들어감 -->
+					#{item}
+				</foreach>
 			</if>
 			<if test="searchCondition == 'id'">
 				and id like '%' || #{searchKeyword} || '%'
@@ -43,25 +57,28 @@
 				and name like '%' || #{searchKeyword} || '%'
 			</if>
 		</where>
-	
+
 	</select>
 
 	<!-- 단건조회 -->
 	<select id="getUser" parameterType="user" resultType="user">
-		SELECT * FROM USERS WHERE ID = #{id}
+		SELECT *
+		FROM USERS WHERE ID = #{id}
 	</select>
 
 
 	<!-- 등록 -->
 	<insert id="insertUser" parameterType="user"> <!-- parameterType 생략 가능 -->
 		insert into users (id, password, name, role)
-		value ( #{id}, #{password}, #{name}, #{role} ) <!-- 메서도 호출함 -->
+		value ( #{id},
+		#{password}, #{name}, #{role} ) <!-- 메서도 호출함 -->
 	</insert>
 
 	<!-- 수정 -->
 	<update id="updateUser" parameterType="user">
 		update users set
-		password = #{password},
+		password =
+		#{password},
 		name = #{name},
 		role = #{role}
 		where id = #[id}
@@ -70,6 +87,7 @@
 	<!-- 삭제 -->
 	<delete id="deleteUser" parameterType="user">
 		delete from users
-		where id = #{id}
+		where id
+		= #{id}
 	</delete>
 </mapper>

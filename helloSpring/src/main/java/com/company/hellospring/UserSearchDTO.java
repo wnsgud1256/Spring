@@ -12,6 +12,18 @@ public class UserSearchDTO extends UserDTO {
 	//단건처리를 위해 배열 사용
 	
 	private String[] ids;  //스트링 배열  Foreach를 쓰기 위해 생성.
+	
+	private String Sort; //정렬 기준
+	
+	
+
+	public String getSort() {
+		return Sort;
+	}
+
+	public void setSort(String sort) {
+		Sort = sort;
+	}
 
 	public String getSearchCondition() {
 		return searchCondition;
@@ -56,8 +68,10 @@ public class UserSearchDTO extends UserDTO {
 	@Override
 	public String toString() {
 		return "UserSearchDTO [searchCondition=" + searchCondition + ", searchKeyword=" + searchKeyword + ", start="
-				+ start + ", end=" + end + ", ids=" + Arrays.toString(ids) + "]";
+				+ start + ", end=" + end + ", ids=" + Arrays.toString(ids) + ", Sort=" + Sort + "]";
 	}
+
+	
 	//디버깅을 하기위해서 출력 값을 받아 볼려면(string값) toString을 생성 해야함
 	
 	

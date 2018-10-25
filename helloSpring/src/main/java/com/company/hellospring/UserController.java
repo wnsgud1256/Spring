@@ -1,18 +1,35 @@
 package com.company.hellospring;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.company.hellospring.common.Paging;
 
+@SessionAttributes("user")
 @Controller
 public class UserController {
 
 	@Autowired //DI(Dependency Injection)
 	UserService userService;
+	
+	
+	@ModelAttribute("roleMap") //model.addAttribute("roleMap",map) 과 같은 명령문이다.
+	public Map<String,String> roleMap(){
+		Map<String,String> map = new HashMap<String, String>();
+		map.put("Admin","관리자");
+		map.put("User","사용자");
+		map.put("Super","최고관리자");
+		return map;
+	}
 	
 	@RequestMapping("/getUsers.do")//URL요청
 	public ModelAndView getUsers(ModelAndView mv  //ModelAndView 모델과 뷰의 객체가 함께 있는 것임
@@ -47,8 +64,9 @@ public class UserController {
 	}
 	//수정처리
 	@RequestMapping("/updateUser.do")//URL요청
-	public String updateUser(Model model, UserDTO dto) {
+	public String updateUser(Model model, UserDTO dto,SessionStatus ss) {
 		model.addAttribute("user",userService.updateUser(dto)); 
+		ss.setComplete();
 		return "redirect:/getUsers.do";
 	}
 	//등록폼
